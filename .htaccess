@@ -1,0 +1,7 @@
+RewriteEngine On 
+
+# exclude paths containing these from the rewrite
+RewriteCond $1 !^(index\.php|assets)
+
+# rewrite anything other than excluded paths to index.php
+RewriteRule ^(.*)$ index.php?$1 [L]
