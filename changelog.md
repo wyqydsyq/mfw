@@ -9,7 +9,7 @@ mfw - MicroFrameWork Changelog
 0.1
 -------------------------------
 
-* Re-built `$mfw::depends()` to import the library from the existing mfw instance if its already been loaded, so we dont load the same library every time it gets used
+* Re-built `$mfw::depends()` to import the library from the existing mfw instance if its already been loaded, to prevent reloading the same libraries every time they get used
 * Improved commenting
 * Added logging via `$mfw::log()`
 
@@ -32,4 +32,9 @@ mfw - MicroFrameWork Changelog
 0.22
 -------------------------------
 
-* Fixed use of deprecated function ereg() in `/libraries/mail.lib.php`, line `423`, now uses preg_match
+* Fixed use of deprecated function ereg() in `/libraries/mail.lib.php`, line `423`, now uses preg_match()
+
+0.3
+-------------------------------
+
+* Replaced db class to be a wrapper for the mysqli class. Now overloads calls to a mysqli instance rather than custom object aliases
