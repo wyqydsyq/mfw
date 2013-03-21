@@ -38,3 +38,8 @@ mfw - MicroFrameWork Changelog
 -------------------------------
 
 * Replaced db class to be a wrapper for the mysqli class. Now overloads calls to a mysqli instance rather than custom object aliases
+
+0.4
+-------------------------------
+
+* Replaced mail library to be a wrapper for PHPMailer, now overloads calls to PHPMailer rather than an inline mail script
