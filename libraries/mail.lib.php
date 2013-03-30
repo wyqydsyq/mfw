@@ -58,20 +58,45 @@
 		return $this->i->Send();
 	}
 	
+	// an easy, inline way to embed an image
+	function embed_image($file, $cid='', $name=false, $attr=array()){
+		$this->AddEmbeddedImage($file, $cid, $name);
+		$r = '<img src="cid:'.$cid.'" title="'.$name.'"';
+		
+		if(!empty($attr) && is_array($attr)){
+			foreach($attr as $k=>$v){
+				$r .= ' '.$k.'="'.$v.'"';
+			}
+		}
+		
+		$r .= ' />';
+		
+		return $r;
+	}
+	
 	// overloader to pass method calls to PHPMailer
 	public function __call($method, $arg){
 		// if the requested method exists in the mysqli instance, call that
-		if(method_exists($this->i, $method)) return call_user_func_array(array($this->i, $method), $arg);
-		else trigger_error('Error: Could not call \''.$method.'\' of mail class.');
+		try {
+			call_user_func_array(array($this->i, $method), $arg);
+		} catch (Exception $e) {
+			tigger_error('Error: Could not call \''.$name.'\' of '.get_class().' class.');
+		}
 	}
 	
 	// overloaders for getting and setting on PHPMailer properties
 	function __get($name) {
-		if(property_exists($this->i, $name)) return $this->i->$name;
-		else trigger_error('Error: Could not get \''.$method.'\' of mail class.');
+		try {
+			return $this->i->$name;
+		} catch (Exception $e) {
+			tigger_error('Error: Could not get \''.$name.'\' of '.get_class().' class.');
+		}
 	}
 	function __set($name, $value) {
-		if(property_exists($this->i, $name)) return $this->i->$name = $value;
-		else trigger_error('Error: Could not set \''.$method.'\' of mail class.');
+		try {
+			return $this->i->$name = $value;
+		} catch (Exception $e) {
+			trigger_error('Error: Could not set \''.$name.'\' of '.get_class().' class.');
+		}
 	}
 }
