@@ -1,6 +1,4 @@
-<?php
-
-class router extends mfw {
+<?php class router extends mfw {
 	
 	var $routes = array();
 	var $matched = array();

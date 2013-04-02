@@ -1,17 +1,11 @@
-<?php
+<?php class hello extends mfw {
 
-if (!class_exists('hello')) {
+	public function __construct() {
+		parent::__construct();
+	}
 
-	class hello extends mfw {
-
-		public function __construct() {
-			parent::__construct();
-		}
-
-		public function index() {
-			$this->render->page('hello', array('db' => $this->db));
-		}
-
+	public function index() {
+		$this->render->page('hello', array('db' => $this->db));
 	}
 
 }
