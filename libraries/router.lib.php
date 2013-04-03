@@ -38,14 +38,15 @@
 			$GLOBALS['true_get'] = $qs;
 		}
 		
-		$url = str_replace($this->base_url, '', (strpos($url, '?') !== false) ? substr($url, 0, strpos($url, '?')) : $url);
+		$url = (strpos($url, '?') !== false) ? substr($url, 0, strpos($url, '?')) : $url;
+		if(!preg_match('/^\/$/', $this->base)) $url = str_replace($this->base, '', $url);
 		
 		// try to match the path against routes
 		foreach($this->routes as $path => $target){
 			
 			if(!in_array($path, $this->matched) && preg_match('/'.$path.'/', $url)){
 				
-				$parsed = $this->base_url.preg_replace('/'.$path.'/', $target, $url);
+				$parsed = $this->base.preg_replace('/'.$path.'/', $target, $url);
 				
 				$this->matched[] = $path;
 				$this->request = $parsed;

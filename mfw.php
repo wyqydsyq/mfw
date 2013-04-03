@@ -132,8 +132,10 @@ class mfw {
 		if($start) $mfw = $this;
 		
 		$this->depends('router');
-		$mfw->base_url = $this->base_url = $this->router->locate();
-		$mfw->path = $this->path = $this->router->parse(str_replace($this->base_url, '', $_SERVER['REQUEST_URI']));
+		$mfw->base = $this->base = $this->router->locate();
+		$baseless_url = (preg_match('/^\/$/', $this->base)) ? substr($_SERVER['REQUEST_URI'], 1) : str_replace($this->base, '', $_SERVER['REQUEST_URI']);
+		$mfw->path = $this->path = $this->router->parse($baseless_url);
+		
 		$this->depends($this->libraries);
 		$this->path($this->path);
 	}

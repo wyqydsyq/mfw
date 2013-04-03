@@ -9,29 +9,16 @@
 	
 	// overloader to pass method calls to mysqli
 	public function __call($method, $arg){
-		// if the requested method exists in the mysqli instance, call that
-		try {
-			call_user_func_array(array($this->i, $method), $arg);
-		} catch (Exception $e) {
-			tigger_error('Error: Could not call \''.$name.'\' of '.get_class().' class.');
-		}
+		return call_user_func_array(array($this->i, $method), $arg);
 	}
 	
 	// overloaders for getting and setting on mysqli properties
 	function __get($name) {
-		try {
-			return $this->i->$name;
-		} catch (Exception $e) {
-			tigger_error('Error: Could not get \''.$name.'\' of '.get_class().' class.');
-		}
+		return $this->i->$name;
 	}
 	
 	function __set($name, $value) {
-		try {
-			return $this->i->$name = $value;
-		} catch (Exception $e) {
-			trigger_error('Error: Could not set \''.$name.'\' of '.get_class().' class.');
-		}
+		return $this->i->$name = $value;
 	}
 
 	// db object

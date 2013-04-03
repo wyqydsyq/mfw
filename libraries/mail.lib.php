@@ -78,7 +78,7 @@
 	public function __call($method, $arg){
 		// if the requested method exists in the mysqli instance, call that
 		try {
-			call_user_func_array(array($this->i, $method), $arg);
+			return call_user_func_array(array($this->i, $method), $arg);
 		} catch (Exception $e) {
 			tigger_error('Error: Could not call \''.$name.'\' of '.get_class().' class.');
 		}
