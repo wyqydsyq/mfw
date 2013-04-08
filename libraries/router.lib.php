@@ -63,7 +63,7 @@
 		if(empty($p[1])) $p[1] = $this->default_method;
 		
 		$url = implode('/', $p);
-		$mfw->request = $url;
+		$mfw->request = $this->request = $url;
 		$this->parsed_url = parse_url('http'.((!empty($_SERVER['HTTPS']))?'s':'').'://'.$_SERVER['HTTP_HOST'].$this->base.$url.'?'.$this->query_string);
 		return $url;
 	}

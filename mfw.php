@@ -93,15 +93,15 @@ class mfw {
 		session_start();
 		
 		$this->path();
-
-		$controller = $this->parameters[0];
+		
+		$controller = str_replace('-', '_', $this->parameters[0]);
 
 		// load controller
 		$load_controller = $this->$controller = $this->load->controller($controller);
 
 		if ($load_controller !== false) {
 			// find the method to run
-			$method = $this->parameters[1];
+			$method = str_replace('-', '_', $this->parameters[1]);
                         
                         $properties = array();
 			for ($i = 2; $i <= count($this->parameters) - 1; $i++) {
@@ -109,11 +109,15 @@ class mfw {
 			}
 			
 			// if method not found, error out
-			if(!method_exists($this->$controller, $method)) {
-				$_GET['e'] = '404';
-				$_GET['file'] = $controller.'/'.$method;
-				$this->$controller = $this->load->controller('error');
-				$method = 'index';
+			if(method_exists($this->$controller, $method)) {
+				$reflection = new ReflectionMethod($this->$controller, $method);
+				if(!$reflection->isPublic()){
+					$this->url->redirect('error?e=404&file='.$controller.'/'.$method);
+					exit;
+				}
+			} else {
+				$this->url->redirect('error?e=404&file='.$controller.'/'.$method);
+				exit;
 			}
 			
 			// run method
